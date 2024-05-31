@@ -10,7 +10,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    echo "BUILD DOCKER IAMGE"
+                    echo "BUILD DOCKER IMAGE"
                     docker.build('laravel-app')
                 }
             }
@@ -18,9 +18,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "DEPLOYING"
-                sshagent(credentials: ['d2147032-78a3-4105-929c-7786ed231b4c']) {
+                // Use the withCredentials block to inject username and password
+                withCredentials([usernamePassword(credentialsId: 'd2147032-78a3-4105-929c-7786ed231b4c', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
                     sh '''
-                    ssh root@159.223.32.149 '
+                    sshpass -p $SSH_PASS ssh -o StrictHostKeyChecking=no $SSH_USER@159.223.32.149 '
                     cd laravel-app
                     docker-compose down
                     docker-compose up -d --build
