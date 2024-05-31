@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "DEPLOYING"
-                sshagent(['d2147032-78a3-4105-929c-7786ed231b4c']) {
+                sshagent(credentials: ['d2147032-78a3-4105-929c-7786ed231b4c']) {
                     sh '''
                     ssh root@159.223.32.149 '
                     cd laravel-app
