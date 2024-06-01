@@ -3,11 +3,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                echo "Checkout..."
                 git 'https://github.com/ronnin01/laravel-app.git'
             }
         }
         stage('Build') {
             steps {
+                echo "Building..."
                 script {
                     docker.build('laravel-app', '.')
                 }
@@ -16,6 +18,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(['jenkinsadmin']) {
+                    echo "Deploying..."
                     sh '''
                     ssh -o StrictHostKeyChecking=no root@159.223.46.170 '
                     cd laravel-app
