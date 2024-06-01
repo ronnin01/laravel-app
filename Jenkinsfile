@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sshagent(['jenkinsadmin']) {
                     sh '''
-                    ssh root@159.223.46.170 '
+                    ssh -o StrictHostKeyChecking=no root@159.223.46.170 '
                     cd laravel-app
                     git pull
                     docker-compose up -d --build
