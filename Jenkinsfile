@@ -1,34 +1,29 @@
 pipeline {
     agent any
     stages {
-        stage("Verify Tooling") {
+        stage('Checkout') {
             steps {
-                sh '''
-                    docker info
-                    docker version
-                    docker compose version
-                '''
+                git 'https://github.com/ronnin01/laravel-app.git'
             }
         }
-        stage("Clear all running docker containers") {
+        stage('Build') {
             steps {
                 script {
-                    try {
-                        sh 'docker rm -f $(docker ps -a -q)'
-                    } catch(Exception e) {
-                        echo "No running container to clear up..."
-                    }
+                    docker.build('laravel-app', '.')
                 }
             }
         }
-        stage("Start Docker") {
+        stage('Deploy') {
             steps {
-                sh 'docker compsoer ps'
-            }
-        }
-        stage("Run Test") {
-            steps {
-                sh 'docker compose run --rm artisan test'
+                sshagent(['jenkinsadmin']) {
+                    sh '''
+                    ssh root@159.223.46.170 '
+                    cd laravel-app
+                    git pull
+                    docker-compose up -d --build
+                    '
+                    '''
+                }
             }
         }
     }
