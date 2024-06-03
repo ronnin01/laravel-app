@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo "Checking out the code..."
-                git url: env.REPO_URL
+                git env.REPO_URL
             }
         }
         stage('Build') {
@@ -42,12 +42,6 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed.'
-        }
-        cleanup {
-            echo 'Cleaning up...'
-            script {
-                // Add cleanup steps if necessary
-            }
         }
     }
 }
