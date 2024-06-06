@@ -28,7 +28,9 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
                     cd laravel-app
-                    git pull
+                    rm -r .
+                    cp -r * .
+                    cp .env.example .env
                     docker-compose up -d
                     '
                     '''
