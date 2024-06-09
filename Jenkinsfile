@@ -32,7 +32,6 @@ pipeline {
                     
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
                     cd laravel-app
-                    docker-compose run php artisan key:generate
                     docker-compose up -d
                     '
                     '''
