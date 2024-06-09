@@ -28,10 +28,13 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER "mkdir -p /laravel-app"
 
-                    rsync -avz -e "ssh -o StrictHostKeyChecking=no" --delete ./ $DEPLOY_SERVER:/laravel-app/
+                    rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $DEPLOY_SERVER:/laravel-app/
                     
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
                     cd laravel-app
+                    ls -a
+                    cp .env.example .env
+                    docker-compose run php artisan key:generate
                     docker-compose up -d
                     '
                     '''
