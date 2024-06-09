@@ -26,9 +26,9 @@ pipeline {
                 sshagent([env.SSH_CREDENTIALS]) {
                     echo "Deploying application..."
                     sh '''
-                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER "sudo mkdir -p /laravel-app"
+                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER "mkdir -p /laravel-app"
 
-                    sudo rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $DEPLOY_SERVER:/laravel-app/
+                    rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $DEPLOY_SERVER:/laravel-app/
                     
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
                     cd laravel-app
