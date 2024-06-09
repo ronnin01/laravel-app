@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
         REPO_URL = 'https://github.com/ronnin01/laravel-app.git'
-        DEPLOY_SERVER = 'root@159.223.46.170'
+        DEPLOY_SERVER = 'app-server@192.168.1.11'
         DOCKER_IMAGE = 'laravel-app'
-        SSH_CREDENTIALS = 'jenkinsadmin'
+        SSH_CREDENTIALS = 'laravel-app'
     }
     stages {
         stage('Checkout') {
