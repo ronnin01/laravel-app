@@ -4,7 +4,7 @@ pipeline {
         REPO_URL = 'https://github.com/ronnin01/laravel-app.git' // change url repo you used
         DEPLOY_SERVER = 'app-server@192.168.1.8' // change your credentials here for ssh in your web-app server
         DOCKER_IMAGE = 'laravel-app' // location of docker image of your app
-        SSH_CREDENTIALS = 'laravel-app' // the ssh credentials use make with the ssh private key
+        SSH_CREDENTIALS = 'web-app-deploy' // the ssh credentials use make with the ssh private key
     }
     stages {
         stage('Checkout') {
