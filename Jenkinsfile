@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        REPO_URL = 'https://github.com/ronnin01/laravel-app.git'
-        DEPLOY_SERVER = 'app-server@192.168.1.11'
-        DOCKER_IMAGE = 'laravel-app'
-        SSH_CREDENTIALS = 'laravel-app'
+        REPO_URL = 'https://github.com/ronnin01/laravel-app.git' // change url repo you used
+        DEPLOY_SERVER = 'app-server@192.168.1.8' // change your credentials here for ssh in your web-app server
+        DOCKER_IMAGE = 'laravel-app' // location of docker image of your app
+        SSH_CREDENTIALS = 'laravel-app' // the ssh credentials use make with the ssh private key
     }
     stages {
         stage('Checkout') {
@@ -26,8 +26,6 @@ pipeline {
                 sshagent([env.SSH_CREDENTIALS]) {
                     echo "Deploying application..."
                     sh '''
-                    ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER "mkdir -p /laravel-app"
-
                     rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $DEPLOY_SERVER:/laravel-app/
                     
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
