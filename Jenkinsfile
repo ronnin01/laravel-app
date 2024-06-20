@@ -23,16 +23,6 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                def dockerImage = docker.image("your_docker_image")
-                    dockerImage.inside('-u 1000:1000') {
-                        sh '''
-                            # Ensure permissions are correct
-                            chmod -R 755 /var/www/vendor
-                            # Remove the vendor directory
-                            rm -rf /var/www/vendor
-                        '''
-                    }
-                
                 sshagent([env.SSH_CREDENTIALS]) {
                     echo "Deploying application..."
                     sh '''
