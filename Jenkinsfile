@@ -26,13 +26,8 @@ pipeline {
                 sshagent([env.SSH_CREDENTIALS]) {
                     echo "Deploying application..."
                     sh '''
-                    rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $DEPLOY_SERVER:/laravel-app
-                    
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
-                    cd laravel-app
-                    cp .env.example .env
-                    docker exec -it laravel-app php artisan key:generate
-                    docker-compose up -d
+                    ls -a
                     '
                     '''
                 }
