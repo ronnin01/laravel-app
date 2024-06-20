@@ -31,7 +31,7 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no $DEPLOY_SERVER '
                     cd laravel-app
                     cp .env.example .env
-                    docker exec -it laravel-app php artisan key:generate
+                    docker exec -it laravel-app composer install && php artisan key:generate
                     docker-compose up -d
                     '
                     '''
