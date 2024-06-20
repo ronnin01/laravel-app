@@ -25,6 +25,17 @@ pipeline {
             steps {
                 sshagent([env.SSH_CREDENTIALS]) {
                     echo "Deploying application..."
+
+                    def dockerImage = docker.image("your_docker_image")
+                    dockerImage.inside('-u 1000:1000') {
+                        sh '''
+                            # Ensure permissions are correct
+                            chmod -R 755 /var/www/vendor
+                            # Remove the vendor directory
+                            rm -rf /var/www/vendor
+                        '''
+                    }
+                    
                     sh '''
                     rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ app-server@192.168.1.8:~/laravel-app
                     
