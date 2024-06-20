@@ -21,6 +21,8 @@ RUN chown -R www-data:www-data /var/www/html/bootstrap/cache
 
 RUN chown -R www-data:www-data /var/www/html/storage
 
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 EXPOSE 9000
 
 CMD php-fpm
